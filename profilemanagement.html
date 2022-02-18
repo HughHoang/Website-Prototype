@@ -10,6 +10,15 @@
 <body>
     <h1>Profile Management</h1>
     <form method="POST" action="/action_page.php" enctype="multipart/form-data">
+        <div>
+            <ul>
+                <li><a href="home.html">Home</a></li>
+                <li><a href="profilemanagement.html">Profile Management</a></li>
+                <li><a href="fuelquoteform.html">Fuel Quote Form</a></li>
+                <li><a href="fuelquoteshistory.html">Fuel Quote History</a></li>
+                <li style="float:right"><a class="out" href="login.html">Logout</a></li>
+            </ul>
+        </div>
         <div><label for="fullName">Full name:</label>
             <input type="text" name="fullName" value="" maxlength="50" required/></div>
 
@@ -81,7 +90,7 @@
         <div><label for="zipcode">Zip Code:</label>
             <input type="text" name="zipcode" value="" minlength="5" maxlength="9" required/></div>
 
-        <div><input type="submit" value="Submit"></div>
+        <div><input type="submit" class="button" value="Submit"></div>
     </form>
 
 </body>
