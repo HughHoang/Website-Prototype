@@ -46,28 +46,3 @@ require_once("connect.php");
         $error_msg = 'Please fill out all required fields.';
 
     ?>
-<!DOCTYPE html>
-
-<head>
-    <script type="text/javascript" src="function.js"></script>
-</head>
-<html lang="en">
-<title> Registeration </title>
-<link rel="stylesheet" href="styles.css">
-
-<body>
-    <h1>Registeration</h1>
-    <form method="POST" action="/action_page.php" enctype="multipart/form-data">
-        <div><label for="Username">Username:</label>
-            <input type="text" id="username" name="username" required></div>
-
-        <div><label for="Password">Password:</label>
-            <input type="password" id="password" name="password" required></div>
-
-        <div>
-            <a href="login.html"></a> <input type="submit" name="registerBtn" class="button" value="Submit"></div>
-    </form>
-
-</body>
-
-</html>
