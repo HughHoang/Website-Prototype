@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 require_once("connect.php"); 
     $username="";
     $passwd="";
@@ -10,7 +11,7 @@ require_once("connect.php");
     // check to see if there is a user already logged in, if so redirect them 
     session_start(); 
     if (isset($_SESSION['username']) && isset($_SESSION['userid'])) 
-        header("Location: ./home.html");  // redirect the user to the home page
+        header("Location: home.php");  // redirect the user to the home page
 
     //if username and password arent empty
     if ($username != "" && $passwd != ""){
