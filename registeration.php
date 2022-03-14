@@ -1,6 +1,13 @@
 <?php
+session_start();
 
-require_once("connect.php"); 
+require("connect.php"); 
+if(isset($_SESSION['user'] )){
+    header('Location: home.php');
+}else{
+    $reg = file_get_contents('registeration.html');
+    echo $reg;
+
     $username="";
     $passwd="";
     //if registerbutton clicked assign values
@@ -45,5 +52,5 @@ require_once("connect.php");
         }
     else
         $error_msg = 'Please fill out all required fields.';
-
+    }
     ?>

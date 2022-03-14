@@ -1,7 +1,15 @@
 <?php
-include "connect.php";
+include("connect.php");
+session_start();
 
-if(isset($_POST['butfuelsubmit'])){
+
+if(!(isset($_SESSION['user']))){
+    header('Location: login.php');
+}else{
+    $form = file_get_contents('fuelquoteform.html');
+    echo $form;
+
+    if(isset($_POST['butfuelsubmit'])){
 
     $gallonsrequest = mysqli_real_escape_string($con,$_POST['gallonsrequest']);
     $deliveryaddress = mysqli_real_escape_string($con,$_POST['deliveryaddress']);
@@ -21,5 +29,7 @@ if(isset($_POST['butfuelsubmit'])){
     else
         $error_msg = 'Please fill out all required fields.';
 
+    }
 }
+
 ?>
