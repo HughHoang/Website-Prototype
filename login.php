@@ -34,8 +34,19 @@ if(isset($_SESSION['user'] )){
             
             if($uname == "admin" && $password == "password"){
                 $_SESSION['user'] = $uname;
+                $_SESSION['info'] = array("Full Name", "1", "Street","Houston", "TX", 77777);
+                $fuelhist = array(
+                    array(1,"1 Street", '1-1-1', 1, 1),
+                    array(2,"2 Street", '2-2-2', 2, 2),
+                    array(3,"3 Street", '3-3-3', 3, 3),
+                );
+                $_SESSION['history']  = $fuelhist;
                 header('Location: home.php');
-            }else{
+            }else if($uname == "new" && $password == "user"){
+                $_SESSION['user'] = $uname;
+                header('Location: home.php');
+            }
+            else{
                 echo "<p style=\"color:rgb(255,0,0);\">Invalid username and password</p>";
             }
         }

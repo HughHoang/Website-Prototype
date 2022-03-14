@@ -5,6 +5,8 @@ session_start();
 
 if(!(isset($_SESSION['user']))){
     header('Location: login.php');
+}else if(!(isset($_SESSION['info']))){
+    header('Location: profilemanagement.php');
 }else{
     $form = file_get_contents('fuelquoteform.html');
     echo $form;

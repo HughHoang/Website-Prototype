@@ -6,8 +6,13 @@ session_start();
 if(!(isset($_SESSION['user']))){
     header('Location: login.php');
 }else{
+    
     $profile = file_get_contents('profilemanagement.html');
     echo $profile;
+    
+    if(isset($_SESSION['info'])){
+        
+    }
     if(isset($_POST['butprofileset'])){
         
         /*$fullname = mysqli_real_escape_string($con,$_POST['fullName']);
@@ -16,12 +21,21 @@ if(!(isset($_SESSION['user']))){
         $city = mysqli_real_escape_string($con,$_POST['city']);
         $state = mysqli_real_escape_string($con,$_POST['state']);
         $zipcode= mysqli_real_escape_string($con,$_POST['zipcode']);*/
-        
+        $fullname = $_POST['fullName'];
+        $firstaddress = $_POST['address1'];
+        $secondaddress = $_POST['address2'];
+        $city = $_POST['city'];
+        $state = $_POST['state'];
+        $zipcode= $_POST['zipcode'];
 
+        $_SESSION['info'] = array($fullname, $firstaddress, $secondaddress, $city , $state, $zipcode);
+        
         //if username and password arent empty
         if ($fullname != "" && $firstaddress != ""&& $secondaddress != ""&& $city != ""&& $state != ""&& $zipcode != ""){
+           
+
             // make sure the password is above 5 characters and dont include illegal characters
-            if (mysqli_num_rows($query) == 0){
+            /*if (mysqli_num_rows($query) == 0){
                 $id = $length;
                 //insert into database
                 mysqli_query($conn, "INSERT INTO clientinformation VALUES (
@@ -35,7 +49,7 @@ if(!(isset($_SESSION['user']))){
                 }
                 else
                     $error_msg = 'An error occurred and your account was not created.';
-            }
+            }*/
             }
         else
             $error_msg = 'Please fill out all required fields.';
