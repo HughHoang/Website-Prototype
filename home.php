@@ -3,7 +3,7 @@ session_start();
 
 include("connect.php");
 
-if(!(isset($_SESSION['user']))){
+if(!(isset($_SESSION['user']) && isset($_SESSION['id']))){
     header('Location: login.php');
 }else if(!(isset($_SESSION['info']))){
     header('Location: profilemanagement.php');

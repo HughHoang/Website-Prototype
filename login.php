@@ -1,55 +1,50 @@
 <?php
-
 include "connect.php";
 session_start();
 
-if(isset($_SESSION['user'] )){
+if(isset($_SESSION['user']) && isset($_SESSION['id'])){
     header('Location: home.php');
-}else{
-    $login = file_get_contents('login.html');
-    echo $login;
-    if(isset($_POST['butlogin'])){
+}
+$login = file_get_contents('login.html');
+echo $login;
+if(isset($_POST['butlogin'])){
        
-        #$uname = mysqli_real_escape_string($con,$_POST['username']);
-        #$password = mysqli_real_escape_string($con,$_POST['password']);
-        
-        $uname = $_POST['username'];
-        $password = $_POST['password'];
+    $uname = mysqli_real_escape_string($conn,$_POST['username']);
+    $password = mysqli_real_escape_string($conn,$_POST['password']);
+ 
                 
-        if ($uname != "" && $password != ""){
+    if ($uname != "" && $password != ""){
+        $sql_query = "SELECT count(*) FROM usercredentials WHERE username='".$uname."' and password='".$password."'";
+        $result = mysqli_query($conn,$sql_query);
 
-            /*$sql_query = "select count(*) as cntUser from users where username='".$uname."' and password='".$password."'";
-            $result = mysqli_query($con,$sql_query);
-            $row = mysqli_fetch_array($result);
+        $count = mysqli_num_rows($result);
 
-            $count = $row['cntUser'];
-
-            if($count > 0){
-                $_SESSION['uname'] = $uname;
-                header('Location: home.php');
-                }else{
-                    echo "Invalid username and password";
-                }
-            }*/
+        if($count > 0){
+           
+            $sql_query = "SELECT id FROM usercredentials WHERE username='".$uname."' and password='".$password."'";
+            $result = mysqli_query($conn,$sql_query);
+            $id=mysqli_fetch_array($result)['id'];
             
-            if($uname == "admin" && $password == "password"){
+            $result = mysqli_query($conn,"SELECT * FROM clientinformation WHERE id=".$id."");
+            $rows=mysqli_fetch_array($result);
+ 
+            if(count((array)$rows) == 0){
+                header('Location: profilemanagement.php');
                 $_SESSION['user'] = $uname;
-                $_SESSION['info'] = array("Full Name", "1", "Street","Houston", "TX", 77777);
-                $fuelhist = array(
-                    array(1,"1 Street", '1-1-1', 1, 1),
-                    array(2,"2 Street", '2-2-2', 2, 2),
-                    array(3,"3 Street", '3-3-3', 3, 3),
-                );
-                $_SESSION['history']  = $fuelhist;
-                header('Location: home.php');
-            }else if($uname == "new" && $password == "user"){
+                $_SESSION['id'] = $id;
+            }else{
                 $_SESSION['user'] = $uname;
+                $_SESSION['id'] = $id;
+                $_SESSION['info'] = $rows;
                 header('Location: home.php');
             }
-            else{
-                echo "<p style=\"color:rgb(255,0,0);\">Invalid username and password</p>";
-            }
+        }else{
+            echo "<p style=\"color:rgb(255,0,0);\">Invalid username and password</p>";
         }
     }
+        
 }
+
+
+
 ?>

@@ -3,57 +3,59 @@ include('connect.php');
 session_start();
 
 
-if(!(isset($_SESSION['user']))){
+if(!(isset($_SESSION['user']) && isset($_SESSION['id']))){    
     header('Location: login.php');
 }else{
     
     $profile = file_get_contents('profilemanagement.html');
     echo $profile;
-    
-    if(isset($_SESSION['info'])){
-        
-    }
+
     if(isset($_POST['butprofileset'])){
         
-        /*$fullname = mysqli_real_escape_string($con,$_POST['fullName']);
-        $firstaddress = mysqli_real_escape_string($con,$_POST['firstaddress']);
-        $secondaddress = mysqli_real_escape_string($con,$_POST['secondaddress']);
-        $city = mysqli_real_escape_string($con,$_POST['city']);
-        $state = mysqli_real_escape_string($con,$_POST['state']);
-        $zipcode= mysqli_real_escape_string($con,$_POST['zipcode']);*/
-        $fullname = $_POST['fullName'];
-        $firstaddress = $_POST['address1'];
-        $secondaddress = $_POST['address2'];
-        $city = $_POST['city'];
-        $state = $_POST['state'];
-        $zipcode= $_POST['zipcode'];
-
-        $_SESSION['info'] = array($fullname, $firstaddress, $secondaddress, $city , $state, $zipcode);
+        $fullname = mysqli_real_escape_string($conn,$_POST['fullName']);
+        $firstaddress = mysqli_real_escape_string($conn,$_POST['address1']);
+        $secondaddress = mysqli_real_escape_string($conn,$_POST['address2']);
+        $city = mysqli_real_escape_string($conn,$_POST['city']);
+        $state = mysqli_real_escape_string($conn,$_POST['state']);
+        $zipcode= mysqli_real_escape_string($conn,$_POST['zipcode']);
         
-        //if username and password arent empty
-        if ($fullname != "" && $firstaddress != ""&& $secondaddress != ""&& $city != ""&& $state != ""&& $zipcode != ""){
-           
-
-            // make sure the password is above 5 characters and dont include illegal characters
-            /*if (mysqli_num_rows($query) == 0){
-                $id = $length;
-                //insert into database
+        if ($fullname != "" && $firstaddress != ""&& $city != ""&& $state != ""&& $zipcode != ""){
+            $id = $_SESSION['id'];
+            if(!(isset($_SESSION['info']))){
+               
                 mysqli_query($conn, "INSERT INTO clientinformation VALUES (
-                    '{$fullname}', '{$firstaddress}',  '{$secondaddress}',  '{$city}',  '{$state}',  '{$zipcode}'
-                )");
-                
-                // verify the user's account was created
-                $query = mysqli_query($conn, "SELECT * FROM clientinformation WHERE fullname='{$fullname}'");
-                if (mysqli_num_rows($query) == 1){
-                    $success = true;
+                    '$id',  '$fullname', '$firstaddress', '$secondaddress',
+                    '$state', '$city', '$zipcode')");
+
+                $result = mysqli_query($conn,"SELECT * FROM clientinformation WHERE id=".$id."");
+                $rows=mysqli_fetch_array($result);
+                if (count((array)$rows) !=0){
+                    $_SESSION['info'] = $rows;
+                    echo "<p style=\"color:rgb(0,255,0);\">Succesfully edited profile!</p>";            
                 }
-                else
-                    $error_msg = 'An error occurred and your account was not created.';
-            }*/
+                else{
+                    echo "<p style=\"color:rgb(255,0,0);\">'An error occurred and your account was not created.</p>'";
+                }
+            }else{
+                mysqli_query($conn, "UPDATE clientinformation Set 
+                fullName='$fullname', address_1='$firstaddress', address_2='$secondaddress',
+                state='$state', city='$city', zipcode='$zipcode' WHERE id =".$id."");
+
+                $result = mysqli_query($conn,"SELECT * FROM clientinformation WHERE id=".$id."");
+                $rows=mysqli_fetch_array($result);
+
+                if (count((array)$rows) !=0){
+                    $_SESSION['info'] = $rows;
+                    echo "<p style=\"color:rgb(0,255,0);\">Succesfully edited profile!</p>";            
+                }
+                else{
+                    echo "<p style=\"color:rgb(255,0,0);\">'An error occurred and your account was not created.</p>'";
+                }
             }
+        }
         else
             $error_msg = 'Please fill out all required fields.';
-        }
-
+        
+    }
 }
 ?>
