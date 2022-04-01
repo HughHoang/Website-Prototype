@@ -14,12 +14,11 @@ if(isset($_POST['butlogin'])){
  
                 
     if ($uname != "" && $password != ""){
-        $sql_query = "SELECT count(*) FROM usercredentials WHERE username='".$uname."' and password='".$password."'";
+        $sql_query = "SELECT COUNT(*) AS 'count' FROM usercredentials WHERE username='".$uname."' and password='".$password."'";
         $result = mysqli_query($conn,$sql_query);
-
-        $count = mysqli_num_rows($result);
-
-        if($count > 0){
+        $rows = mysqli_fetch_array($result);
+        
+        if($rows['count'] > 0){
            
             $sql_query = "SELECT id FROM usercredentials WHERE username='".$uname."' and password='".$password."'";
             $result = mysqli_query($conn,$sql_query);
@@ -28,7 +27,7 @@ if(isset($_POST['butlogin'])){
             $result = mysqli_query($conn,"SELECT * FROM clientinformation WHERE id=".$id."");
             $rows=mysqli_fetch_array($result);
  
-            if(count((array)$rows) == 0){
+            if(mysqli_num_rows($result) == 0){
                 header('Location: profilemanagement.php');
                 $_SESSION['user'] = $uname;
                 $_SESSION['id'] = $id;

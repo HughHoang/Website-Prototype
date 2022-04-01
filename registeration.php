@@ -22,7 +22,6 @@ if(isset($_SESSION['user']) && isset($_SESSION['id'])){
                 $query = mysqli_query($conn, "SELECT * FROM usercredentials WHERE username='{$username}'");
                 //assigns id based on number of rows in database
 
-                $length= mysqli_query($conn, "SELECT COUNT(*) FROM usercredentials");
                 if (mysqli_num_rows($query) == 0){
                     //insert into database
                     mysqli_query($conn, "INSERT INTO usercredentials(username,password) VALUES (

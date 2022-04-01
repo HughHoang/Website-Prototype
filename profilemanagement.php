@@ -29,12 +29,12 @@ if(!(isset($_SESSION['user']) && isset($_SESSION['id']))){
 
                 $result = mysqli_query($conn,"SELECT * FROM clientinformation WHERE id=".$id."");
                 $rows=mysqli_fetch_array($result);
-                if (count((array)$rows) !=0){
+                if (mysqli_num_rows($result) !=0){
                     $_SESSION['info'] = $rows;
                     echo "<p style=\"color:rgb(0,255,0);\">Succesfully edited profile!</p>";            
                 }
                 else{
-                    echo "<p style=\"color:rgb(255,0,0);\">'An error occurred and your account was not created.</p>'";
+                    echo "<p style=\"color:rgb(255,0,0);\">'An error occurred and your profile was not edited.</p>'";
                 }
             }else{
                 mysqli_query($conn, "UPDATE clientinformation Set 
@@ -44,12 +44,12 @@ if(!(isset($_SESSION['user']) && isset($_SESSION['id']))){
                 $result = mysqli_query($conn,"SELECT * FROM clientinformation WHERE id=".$id."");
                 $rows=mysqli_fetch_array($result);
 
-                if (count((array)$rows) !=0){
+                if (mysqli_num_rows($result) !=0){
                     $_SESSION['info'] = $rows;
                     echo "<p style=\"color:rgb(0,255,0);\">Succesfully edited profile!</p>";            
                 }
                 else{
-                    echo "<p style=\"color:rgb(255,0,0);\">'An error occurred and your account was not created.</p>'";
+                    echo "<p style=\"color:rgb(255,0,0);\">'An error occurred and your profile was not edited.</p>'";
                 }
             }
         }
