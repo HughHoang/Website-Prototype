@@ -29,7 +29,7 @@ if(!(isset($_SESSION['user']) && isset($_SESSION['id']))){
         }
     }
     else
-        $error_msg = 'Please fill out all required fields.';
+        echo "<p style=\"color:rgb(255,0,0);\">Please fill out all required fields.</p>";
 
     }
 }

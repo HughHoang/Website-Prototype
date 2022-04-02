@@ -7,8 +7,8 @@ if(!(isset($_SESSION['user']) && isset($_SESSION['id']))){
     header('Location: login.php');
 }else{
     
-    $profile = file_get_contents('profilemanagement.html');
-    echo $profile;
+$profile = file_get_contents('profilemanagement.html');
+echo $profile;
 
     if(isset($_POST['butprofileset'])){
         
@@ -34,7 +34,7 @@ if(!(isset($_SESSION['user']) && isset($_SESSION['id']))){
                     echo "<p style=\"color:rgb(0,255,0);\">Succesfully edited profile!</p>";            
                 }
                 else{
-                    echo "<p style=\"color:rgb(255,0,0);\">'An error occurred and your profile was not edited.</p>'";
+                    echo "<p style=\"color:rgb(255,0,0);\">An error occurred and your profile was not edited.</p>";
                 }
             }else{
                 mysqli_query($conn, "UPDATE clientinformation Set 
@@ -49,13 +49,14 @@ if(!(isset($_SESSION['user']) && isset($_SESSION['id']))){
                     echo "<p style=\"color:rgb(0,255,0);\">Succesfully edited profile!</p>";            
                 }
                 else{
-                    echo "<p style=\"color:rgb(255,0,0);\">'An error occurred and your profile was not edited.</p>'";
+                    echo "<p style=\"color:rgb(255,0,0);\">An error occurred and your profile was not edited.</p>";
                 }
             }
         }
         else
-            $error_msg = 'Please fill out all required fields.';
+        echo "<p style=\"color:rgb(255,0,0);\">Please fill out all required fields.</p>";
         
     }
 }
+
 ?>
