@@ -12,7 +12,7 @@ if(!(isset($_SESSION['user']) && isset($_SESSION['id']))){
     echo $form;
 
     if(isset($_POST['butfuelsubmit'])){
-
+    /*
     $gallonsrequest = mysqli_real_escape_string($con,$_POST['gallonsrequest']);
     $deliveryaddress = mysqli_real_escape_string($con,$_POST['deliveryaddress']);
     $deliverydate = mysqli_real_escape_string($con,$_POST['deliverydate']);
@@ -30,7 +30,7 @@ if(!(isset($_SESSION['user']) && isset($_SESSION['id']))){
     }
     else
         echo "<p style=\"color:rgb(255,0,0);\">Please fill out all required fields.</p>";
-
+    */
     }
 }
 

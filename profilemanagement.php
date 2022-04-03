@@ -53,8 +53,6 @@ echo $profile;
                 }
             }
         }
-        else
-        echo "<p style=\"color:rgb(255,0,0);\">Please fill out all required fields.</p>";
         
     }
 }

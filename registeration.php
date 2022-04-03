@@ -5,7 +5,9 @@ include("connect.php");
 if(isset($_SESSION['user']) && isset($_SESSION['id'])){
     header('Location: home.php');
 }
-
+ob_start();
+$reg = file_get_contents('registeration.html');
+echo $reg;
 
     $username="";
     $passwd="";
@@ -33,7 +35,8 @@ if(isset($_SESSION['user']) && isset($_SESSION['id'])){
                     $query = mysqli_query($conn, "SELECT * FROM usercredentials WHERE username='{$username}'");
                     
                     if (mysqli_num_rows($query) == 1){
-                        header('Location: login.php?message=Account created succesfully.');          
+                        header('Location: login.php?message=Account created succesfully.');      
+                        ob_end_flush();    
                     }
                     else
                         echo "<p style=\"color:rgb(255,0,0);\">An error occurred and your account was not created.</p>";
@@ -45,12 +48,7 @@ if(isset($_SESSION['user']) && isset($_SESSION['id'])){
             else
                echo "<p style=\"color:rgb(255,0,0);\">Your password is not strong enough. Please use another.</p>";
             }
-        else
-            echo "<p style=\"color:rgb(255,0,0);\">Please fill out all required fields.</p>";
     }
     
-$reg = file_get_contents('registeration.html');
-echo $reg;
 
-    
 ?>
