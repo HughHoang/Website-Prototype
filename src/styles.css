@@ -101,7 +101,7 @@ td,
 tr {
     text-align: left;
     font-weight: normal;
-    width: 150px;
+    width: 250px;
 }
 
 .date {
@@ -120,5 +120,5 @@ th {
     background-color: #439A86;
     color: white;
     text-align: center;
-    width: 150px;
+    width: 250px;
 }

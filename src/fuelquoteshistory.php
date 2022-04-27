@@ -7,15 +7,15 @@ if(!isset($_SESSION))
 function createTable($rows){
     echo "<table class=\"center\" border=1>";  
 
-        for ($row = 0; $row < count((array)$rows); $row++) {
+        foreach($rows as $row){
             echo "<tr>";
             
-            echo "<td>".$rows['gallons']."</td>";
-            echo "<td class = \"address\">".$rows['deliveryAdd']."</td>";
-            echo "<td class = \"date\">".$rows['deliveryDate']."</td>";
-            echo "<td>".$rows['price']."</td>";
-            echo "<td>".$rows['totalDue']."</td>";
-
+            echo "<td>".$row['gallons']."</td>";
+            echo "<td class = \"address\">".$row['deliveryAdd']."</td>";
+            echo "<td class = \"date\">".$row['deliveryDate']."</td>";
+            echo "<td>".$row['price']."</td>";
+            echo "<td>".$row['totalDue']."</td>";
+            
             echo "</tr>";
         }
         echo "</table>";
@@ -31,9 +31,17 @@ if(!(isset($_SESSION['user']) && isset($_SESSION['id']))){
 
     $id = $_SESSION['id'];
     $result = mysqli_query($conn,"SELECT * FROM fuelquote WHERE userID=".$id."");
-    $rows=mysqli_fetch_array($result);
 
-    createTable($rows);
+    if(mysqli_num_rows($result)>0){
+        while($row = mysqli_fetch_array($result))
+        {
+            $rows[] = $row;
+        }
+        createTable($rows);
+    }
+    
+    
+    
     
 }
 ?>
