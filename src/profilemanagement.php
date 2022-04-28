@@ -5,7 +5,7 @@ if(!isset($_SESSION))
     session_start(); 
 }
 
-function newProf($id, $fullname, $firstaddress,$secondaddress,$state, $city, $zipcode,$conn){
+function newProf($id, $fullname, $firstaddress,$secondaddress, $city,$state, $zipcode,$conn){
     mysqli_query($conn, "INSERT INTO clientinformation VALUES (
         '$id',  '$fullname', '$firstaddress', '$secondaddress',
         '$state', '$city', '$zipcode')");
@@ -22,7 +22,7 @@ function newProf($id, $fullname, $firstaddress,$secondaddress,$state, $city, $zi
     }
 }
 
-function editProf($id, $fullname, $firstaddress,$secondaddress,$state, $city, $zipcode,$conn){
+function editProf($id, $fullname, $firstaddress,$secondaddress, $city, $state, $zipcode,$conn){
     mysqli_query($conn, "UPDATE clientinformation Set 
         fullName='$fullname', address_1='$firstaddress', address_2='$secondaddress',
         state='$state', city='$city', zipcode='$zipcode' WHERE id =".$id."");
