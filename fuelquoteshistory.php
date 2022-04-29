@@ -1,7 +1,26 @@
 <?php
 include('connect.php');
-session_start();
+if(!isset($_SESSION)) 
+{ 
+    session_start(); 
+}
+function createTable($rows){
+    echo "<table class=\"center\" border=1>";  
 
+        foreach($rows as $row){
+            echo "<tr>";
+            
+            echo "<td>".$row['gallons']."</td>";
+            echo "<td class = \"address\">".$row['deliveryAdd']."</td>";
+            echo "<td class = \"date\">".$row['deliveryDate']."</td>";
+            echo "<td>".$row['price']."</td>";
+            echo "<td>".$row['totalDue']."</td>";
+            
+            echo "</tr>";
+        }
+        echo "</table>";
+        return 1;
+}
 if(!(isset($_SESSION['user']) && isset($_SESSION['id']))){
     header('Location: login.php');
 }else if(!(isset($_SESSION['info']))){
@@ -12,23 +31,17 @@ if(!(isset($_SESSION['user']) && isset($_SESSION['id']))){
 
     $id = $_SESSION['id'];
     $result = mysqli_query($conn,"SELECT * FROM fuelquote WHERE userID=".$id."");
-    $rows=mysqli_fetch_array($result);
 
-    if(mysqli_num_rows($result)!=0){
-        echo "<table class=\"center\" border=1>";  
-
-        for ($row = 0; $row < mysqli_num_rows($result); $row++) {
-            echo "<tr>";
-            
-            echo "<td>".$rows['gallons']."</td>";
-            echo "<td class = \"address\">".$rows['deliveryAdd']."</td>";
-            echo "<td class = \"date\">".$rows['deliveryDate']."</td>";
-            echo "<td>".$rows['price']."</td>";
-            echo "<td>".$rows['totalDue']."</td>";
-
-            echo "</tr>";
+    if(mysqli_num_rows($result)>0){
+        while($row = mysqli_fetch_array($result))
+        {
+            $rows[] = $row;
         }
-        echo "</table>";
+        createTable($rows);
     }
+    
+    
+    
+    
 }
 ?>

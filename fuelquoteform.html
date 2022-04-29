@@ -3,6 +3,7 @@
 <title> Fuel Quote Form </title>
 <link rel="stylesheet" href="styles.css">
 
+
 <body>
     <p id="demo"></p>
     <h1>Fuel Quote Form</h1>
@@ -15,17 +16,30 @@
             <li style="float:right"><a class="out" href="logout.php">Logout</a></li>
         </ul>
     </div>
-    <form method="POST" action="pricingmodule.php" enctype="multipart/form-data">
+
+    <form method="POST" action="fuelquote.php" enctype="multipart/form-data">
         <div><label for="requested">Gallons Requested:</label>
-            <input type="number" id="requested" name="requested" required></div>
+            <input type="number" min="0" id="requested" name="requested" required></div>
 
         <div><label for="add">Delivery Address:</label>
-            <input type="text" id="address1" name="address1" required></div>
+            <input type="text" id="address1" name="address1" readonly></div>
+            
+        <div><label for="deliverydate">Delivery Date:</label>
+            <input type="date" id="deliverydate" name="deliverydate" value="mm/dd/yyyy" onchange="checkDate()" min="2022-04-29"  required><br><br></div>
 
-        <div><label for="delliverydate">Delivery Date:</label>
-            <input type="date" id="delliverydate" name="delliverydate" value="2018-07-22" min="2018-01-01" max="2021-12-31"></div>
+        <div><input type="submit" class="button" name="butfuelget" value="Get Quote"></div>
+    </form>
+            <label for="suggestedprice">Suggested Price / gallon:</label>
+            <input type="number" id="suggestedprice" name="suggestedprice" id="suggestedprice" value="" readonly>
+        </div>
+        <div>
+            <label for="totalamount">Total Amount Due:</label>
+            <input type="number" id="totalamount" name="totalamount" value="" readonly>
+        </div>
 
-        <div><input type="submit" class="button" name="butfuelsubmit" value="Submit"></div>
+        <div>
+            <input type="submit" class="button" name="butfuelsubmit" value="Submit Quote">
+        </div>
     </form>
 
 </body>

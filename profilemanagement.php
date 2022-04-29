@@ -1,12 +1,49 @@
 <?php
 include('connect.php');
-session_start();
+if(!isset($_SESSION)) 
+{ 
+    session_start(); 
+}
 
+function newProf($id, $fullname, $firstaddress,$secondaddress, $city,$state, $zipcode,$conn){
+    mysqli_query($conn, "INSERT INTO clientinformation VALUES (
+        '$id',  '$fullname', '$firstaddress', '$secondaddress',
+        '$state', '$city', '$zipcode')");
+
+    $result = mysqli_query($conn,"SELECT * FROM clientinformation WHERE id=".$id."");
+    $rows=mysqli_fetch_array($result);
+    if (mysqli_num_rows($result) !=0){
+        $_SESSION['info'] = $rows;
+        return 1;        
+    }
+    else{
+        
+        return 2;
+    }
+}
+
+function editProf($id, $fullname, $firstaddress,$secondaddress, $city, $state, $zipcode,$conn){
+    mysqli_query($conn, "UPDATE clientinformation Set 
+        fullName='$fullname', address_1='$firstaddress', address_2='$secondaddress',
+        state='$state', city='$city', zipcode='$zipcode' WHERE id =".$id."");
+
+        $result = mysqli_query($conn,"SELECT * FROM clientinformation WHERE id=".$id."");
+        $rows=mysqli_fetch_array($result);
+
+        if (mysqli_num_rows($result) !=0){     
+            $_SESSION['info'] = $rows;
+            return 1;     
+        }
+        else{
+            return 2;
+        }
+}
 
 if(!(isset($_SESSION['user']) && isset($_SESSION['id']))){    
     header('Location: login.php');
 }else{
-    
+
+
 $profile = file_get_contents('profilemanagement.html');
 echo $profile;
 
@@ -22,35 +59,26 @@ echo $profile;
         if ($fullname != "" && $firstaddress != ""&& $city != ""&& $state != ""&& $zipcode != ""){
             $id = $_SESSION['id'];
             if(!(isset($_SESSION['info']))){
-               
-                mysqli_query($conn, "INSERT INTO clientinformation VALUES (
-                    '$id',  '$fullname', '$firstaddress', '$secondaddress',
-                    '$state', '$city', '$zipcode')");
-
-                $result = mysqli_query($conn,"SELECT * FROM clientinformation WHERE id=".$id."");
-                $rows=mysqli_fetch_array($result);
-                if (mysqli_num_rows($result) !=0){
-                    $_SESSION['info'] = $rows;
-                    echo "<p style=\"color:rgb(0,255,0);\">Succesfully edited profile!</p>";            
-                }
-                else{
-                    echo "<p style=\"color:rgb(255,0,0);\">An error occurred and your profile was not edited.</p>";
-                }
+               $process = newProf($id, $fullname, $firstaddress,$secondaddress, $city, $state, $zipcode,$conn);
+               switch($process){
+                    case 1:
+                        echo "<p style=\"color:rgb(0,255,0);\">Succesfully edited profile!</p>";
+                        break;
+                    case 2:
+                        echo "<p style=\"color:rgb(255,0,0);\">An error occurred and your profile was not edited.</p>";
+                        break;
+               }     
+                
             }else{
-                mysqli_query($conn, "UPDATE clientinformation Set 
-                fullName='$fullname', address_1='$firstaddress', address_2='$secondaddress',
-                state='$state', city='$city', zipcode='$zipcode' WHERE id =".$id."");
-
-                $result = mysqli_query($conn,"SELECT * FROM clientinformation WHERE id=".$id."");
-                $rows=mysqli_fetch_array($result);
-
-                if (mysqli_num_rows($result) !=0){
-                    $_SESSION['info'] = $rows;
-                    echo "<p style=\"color:rgb(0,255,0);\">Succesfully edited profile!</p>";            
-                }
-                else{
-                    echo "<p style=\"color:rgb(255,0,0);\">An error occurred and your profile was not edited.</p>";
-                }
+                $process = editProf($id, $fullname, $firstaddress,$secondaddress, $city, $state, $zipcode,$conn);
+                switch($process){
+                    case 1:
+                        echo "<p style=\"color:rgb(0,255,0);\">Succesfully edited profile!</p>";
+                        break;
+                    case 2:
+                        echo "<p style=\"color:rgb(255,0,0);\">An error occurred and your profile was not edited.</p>";
+                        break;
+               }     
             }
         }
         
