@@ -75,20 +75,25 @@ if(isset($_POST['butfuelget'])){
         <script type="text/javascript">
             document.getElementById("suggestedprice").setAttribute("value", '.$SuggestedPrice.');
             document.getElementById("totalamount").setAttribute("value", '.$total.');
-            document.getElementById("requested").setAttribute("value", '.$gallonsrequested.');
-            document.getElementById("deliverydate").setAttribute("value", "'.$deliveryDate.'");
-        </script>
-        ';
+        </script>';
         
     }else{
       echo "<p style=\"color:rgb(255,0,0);\">Please fill out all required fields.</p>";
     }
+    echo '
+    <script type="text/javascript">
+    document.getElementById("requested").setAttribute("value", '.$gallonsrequested.');
+          document.getElementById("deliverydate").setAttribute("value", "'.$deliveryDate.'");
+          </script>';
 
   }
   //update db
   if(isset($_POST['butfuelsubmit'])){
     $SuggestedPrice =  mysqli_real_escape_string($conn, $_POST['suggestedprice']);
     $total =  mysqli_real_escape_string($conn, $_POST['totalamount']);
+    $gallonsrequested = mysqli_real_escape_string($conn, $_POST['requested']);
+    $deliveryDate = mysqli_real_escape_string($conn,$_POST['deliverydate']);
+
     if ($SuggestedPrice != "" && $total != ""){
       mysqli_query($conn, "INSERT INTO fuelquote(userID, gallons, deliveryAdd, deliveryDate, price, totalDue) VALUES (
         '$id', '".$_SESSION['requested']."', '".$_SESSION['address']."',
@@ -97,14 +102,18 @@ if(isset($_POST['butfuelget'])){
         <script type="text/javascript">
             document.getElementById("suggestedprice").setAttribute("value", '.$SuggestedPrice.');
             document.getElementById("totalamount").setAttribute("value", '.$total.');
-            document.getElementById("requested").setAttribute("value", '.$_SESSION['requested'].');
-            document.getElementById("deliverydate").setAttribute("value", "'.$_SESSION['date'].'");
-        </script>
-        ';
+            
+        </script>';
         echo "<p style=\"color:rgb(0,255,0);\">Fuel Quote submitted!</p>";
       }else{
+
         echo "<p style=\"color:rgb(255,0,0);\">Please Get a Quote first.</p>";
       }
+      echo '
+        <script type="text/javascript">
+            document.getElementById("requested").setAttribute("value", '.$_POST['requested'].');
+            document.getElementById("deliverydate").setAttribute("value", "'.$_POST['deliverydate'].'");    
+        </script>';
   }
 
 ?>
