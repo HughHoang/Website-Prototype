@@ -10,8 +10,13 @@ class historyTest extends TestCase
       if ($conn->connect_error) {
           die("Connection failed: " . $conn->connect_error);
       }
+      $result = mysqli_query($conn,"SELECT * FROM fuelquote WHERE userID=14");
+      while($row = mysqli_fetch_array($result))
+      {
+          $rows[] = $row;
+      }
+      $result = createTable($rows);
       
-      $result = createTable(array('gallons'=>123123, 'deliveryAdd'=>'112334', 'deliveryDate'=>0000-00-00, 'price'=>213123, 'totalDue'=>214123213));
       $this -> assertEquals($result,1);
   }
 
