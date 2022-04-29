@@ -19,15 +19,16 @@
 
     <form method="POST" action="fuelquote.php" enctype="multipart/form-data">
         <div><label for="requested">Gallons Requested:</label>
-            <input type="number" min="1" id="requested" name="requested" required></div>
+            <input type="number" min="0" id="requested" name="requested" required></div>
 
         <div><label for="add">Delivery Address:</label>
             <input type="text" id="address1" name="address1" readonly></div>
-
+            
         <div><label for="deliverydate">Delivery Date:</label>
-            <input type="date" id="deliverydate" name="deliverydate" value="mm/dd/yyyy" min="01/01/2018" max="12/31/2022" required></div>
+            <input type="date" id="deliverydate" name="deliverydate" value="mm/dd/yyyy" onchange="checkDate()" min="2022-04-29"  required><br><br></div>
 
         <div><input type="submit" class="button" name="butfuelget" value="Get Quote"></div>
+    </form>
         <div>
             <label for="suggestedprice">Suggested Price / gallon:</label>
             <input type="number" id="suggestedprice" name="suggestedprice" id="suggestedprice" value="" readonly>
