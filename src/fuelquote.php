@@ -35,7 +35,7 @@ if(isset($_POST['butfuelget'])){
     $deliveryDate = mysqli_real_escape_string($conn,$_POST['deliverydate']);
     
     //if input is not null run
-    if ($gallonsrequested != "" && $deliveryAdd != "" && !is_null($deliveryDate)&&$gallonsrequested>1){
+    if ($gallonsrequested != "" && $deliveryAdd != "" && !is_null($deliveryDate)){
       //sql query if in state TX return 1 else 0
       $sql_query = "SELECT id, state FROM clientinformation WHERE state = 'TX' AND id='".$id."' ";
       $result=mysqli_query($conn,$sql_query);

@@ -56,7 +56,7 @@ echo $profile;
         $state = mysqli_real_escape_string($conn,$_POST['state']);
         $zipcode= mysqli_real_escape_string($conn,$_POST['zipcode']);
         
-        if ($fullname != "" && $firstaddress != ""&& $city != ""&& $state != ""&& $zipcode != ""){
+        if ($fullname != "" && $firstaddress != ""&& $city != ""&& $state != ""&& $zipcode != "" ){
             $id = $_SESSION['id'];
             if(!(isset($_SESSION['info']))){
                $process = newProf($id, $fullname, $firstaddress,$secondaddress, $city, $state, $zipcode,$conn);
