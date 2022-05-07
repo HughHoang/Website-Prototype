@@ -6,7 +6,10 @@ if(!isset($_SESSION))
     session_start(); 
 }
 if(!(isset($_SESSION['user']) && isset($_SESSION['id']))){    
-    header('Location: login.php');
+  header('Location: login.php');
+}
+else if(!(isset($_SESSION['info']))){
+  header('Location: profilemanagement.php');
 }
 $SuggestedPrice = '';
 $total = '';
